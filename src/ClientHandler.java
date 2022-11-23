@@ -17,7 +17,7 @@ public class ClientHandler implements Runnable{
             this.bufferedReader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.clientUsername=bufferedReader.readLine();
             clientHandlers.add(this);
-            broadcastMSG("Server: "+clientUsername+"has entered the chat room.");
+            broadcastMSG("Server: "+clientUsername+" has entered the chat room.");
 
         }catch(IOException e){
             closeAll(socket,bufferedReader,bufferedWriter);
@@ -47,12 +47,14 @@ public class ClientHandler implements Runnable{
         for(ClientHandler clientHandler: clientHandlers){
             try{
                 if(!clientHandler.clientUsername.equals(clientUsername)){
-
+                    clientHandler.bufferedWriter.write(clientUsername +" is typing");
+                    clientHandler.bufferedWriter.newLine();
+                    Thread.sleep(100);
                     clientHandler.bufferedWriter.write(messageToSend);
                     clientHandler.bufferedWriter.newLine();
                     clientHandler.bufferedWriter.flush();
                 }
-            }catch(IOException e){
+            }catch(IOException | InterruptedException e){
                 closeAll(socket, bufferedReader,bufferedWriter);
             }
         }

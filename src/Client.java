@@ -28,6 +28,7 @@ public class Client {
             Scanner scanner = new Scanner(System.in);
             while (socket.isConnected()) {
                 String messageToSend = scanner.nextLine();
+
                 bufferedWriter.write(username + ": "+ messageToSend);
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
@@ -44,6 +45,7 @@ public class Client {
             while (socket.isConnected()){
                 try{
                     msgFromGroupChat = bufferedReader.readLine();
+
                     System.out.println(msgFromGroupChat);
                 }catch (IOException e){
                     closeEverything(socket, bufferedReader, bufferedWriter);
